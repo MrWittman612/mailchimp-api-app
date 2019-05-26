@@ -12,20 +12,22 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname,'public')));
 
-// sign up route
+// Signup Route
 app.post('/signup', (req, res) => {
-  const {firstName, lastName, email} = req.body;
+  const { firstName, lastName, email } = req.body;
 
-  if ( !firstName || !lastName || !email ) {
+  // Make sure fields are filled
+  if (!firstName || !lastName || !email) {
     res.redirect('/fail.html');
     return;
   }
 
+  // Construct req data
   const data = {
     members: [
       {
         email_address: email,
-        status:'subscribed',
+        status: 'subscribed',
         merge_fields: {
           FNAME: firstName,
           LNAME: lastName
@@ -37,10 +39,10 @@ app.post('/signup', (req, res) => {
   const postData = JSON.stringify(data);
 
   const options = {
-    URL: 'https://us19.api.mailchimp.com/3.0/lists/cf8600c787',
+    url: 'https://us19.api.mailchimp.com/3.0/lists/34310f5157',
     method: 'POST',
     headers: {
-      Authorization: 'auth 4bf6e23d3a0682283660009e5c1d8a72-us19'
+      Authorization: 'auth 9ab0972cfb84b012f2f277d5c2ce818e-us19'
     },
     body: postData
   };
@@ -52,6 +54,7 @@ app.post('/signup', (req, res) => {
       if (response.statusCode === 200) {
         res.redirect('/success.html');
       } else {
+        console.log(response.status);
         res.redirect('/fail.html');
       }
     }
