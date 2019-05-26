@@ -8,7 +8,7 @@ const app = express();
 // Bodyparser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -61,4 +61,4 @@ app.post('/signup', (req, res) => {
 	});
 });
 
-app.listen(PORT, console.log(`Server started on ${PORT}`));
+app.listen(port, console.log(`Server started on ${port}`));
